@@ -1,5 +1,9 @@
 # Test automation framework
 
+## Framework architecture intro
+Framework was designed using Page Object pattern. All data that can be shared with other pages or eve apps saved in BasePage class.
+All configuration and steps for cucumber scenarios is in StepDefinitions class. (could be splitted to different parts as well)
+
 ## To spin the tests locally do next
 
 Start appium server with endpoint 127.0.0.1/wd/hub.
@@ -23,8 +27,9 @@ mvn test
 ## To spin the tests in cloud (Sauce Labs) do next:
 _____________________
 ### !!!!important!!!!
-apk file was build for old android version, 7.1.1 android version is not supported with Sauce Labs anymore.
-rebuild apk file for newer android version to maek tests passing on cloud. 
+apk file was build for x86 arch type, Sauce Labs supports only one version with this arch type - 8.1.
+rebuild apk file for newer android version to make tests passing on cloud.
+Also, I left my credentials HARDCODED, to make tests run on my account. 
 ____________________
 add your Sauce Labs username to system variables (name is fake, so paste your name instead)
 ```bash
@@ -40,3 +45,7 @@ export SAUCEKEY=7ccdc9d5-8cda-4a68-9959-890592612345
 ```bash
 mvn -Dremote=true test
 ```
+
+## P.S.
+I use JSon only in one place, to demonstrate I know how to work with it. I prefer to leave all test data in feature files if possible.
+Also, app sometimes crashes (my guess is due to old version it was build), I'd recommend to add retry and taking screenshots on failure, but today it would be too much for this task, so I decided to skip it

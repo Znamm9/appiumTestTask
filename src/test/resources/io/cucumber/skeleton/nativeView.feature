@@ -4,3 +4,9 @@ Feature: Native view
     And I click login
     When I click native view
     Then I see native elements
+
+  Scenario: Check native first element view text
+    Given app started
+    When I click login
+    And I click native view
+    Then I text of first element

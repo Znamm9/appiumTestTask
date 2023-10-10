@@ -1,5 +1,6 @@
 package io.cucumber.skeleton.reactApp;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.remote.AndroidMobileCapabilityType;
 import io.appium.java_client.remote.MobileCapabilityType;
@@ -7,6 +8,7 @@ import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import io.cucumber.skeleton.reactApp.models.NativeViewModel;
 import io.cucumber.skeleton.reactApp.pageObjectsReactApp.HomeScreen;
 import io.cucumber.skeleton.reactApp.pageObjectsReactApp.LoginScreen;
 import io.cucumber.skeleton.reactApp.pageObjectsReactApp.NativeViewScreen;
@@ -16,6 +18,7 @@ import org.openqa.selenium.MutableCapabilities;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 
@@ -75,6 +78,18 @@ public class StepDefinitions{
         }else {
             return System.getProperty("saucekey");
         }
+    }
+
+    public NativeViewModel getExpectedTextFromSonFile(){
+        File jsonFile = new File("src/test/resources/listOfElements.json");
+        ObjectMapper objectMapper = new ObjectMapper();
+        NativeViewModel nativeViewModel;
+        try {
+            nativeViewModel = objectMapper.readValue(jsonFile, NativeViewModel.class);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        return nativeViewModel;
     }
 
     private String getSauceLabsUserName() {
@@ -167,5 +182,12 @@ public class StepDefinitions{
     @Then("I see slider")
     public void iSeeSlider() {
         Assert.assertTrue(sliderScreen.getSlider().isDisplayed());
+    }
+
+
+    @Then("I text of first element")
+    public void iTextOfFirstElementIsProper() {
+        NativeViewModel nativeViewModel = getExpectedTextFromSonFile();
+        Assert.assertEquals(nativeViewScreen.getNativeElementNum(1).getText(), nativeViewModel.getNativeViewTextOne());
     }
 }

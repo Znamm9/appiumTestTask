@@ -4,6 +4,7 @@ import io.cucumber.skeleton.corePageObjects.BasePage;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
+import javax.xml.stream.XMLStreamReader;
 import java.util.List;
 
 public class NativeViewScreen extends BasePage {
