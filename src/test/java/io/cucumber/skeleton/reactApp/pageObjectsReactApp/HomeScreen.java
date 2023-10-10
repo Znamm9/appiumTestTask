@@ -1,11 +1,8 @@
 package io.cucumber.skeleton.reactApp.pageObjectsReactApp;
 
-import io.appium.java_client.pagefactory.AndroidFindBy;
-import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 import io.cucumber.skeleton.corePageObjects.BasePage;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.PageFactory;
 
 import java.util.List;
 
@@ -15,15 +12,6 @@ public class HomeScreen extends BasePage {
 
     public HomeScreen(WebDriver driver) {
         super(driver);
-        PageFactory.initElements(new AppiumFieldDecorator(driver), this);
-    }
-
-
-    @AndroidFindBy(xpath = "//android.view.ViewGroup[@content-desc='chainedView']/android.view.ViewGroup")
-    public WebElement nativeView;
-
-    public WebElement getNativeView(){
-        return getElementByXpath("//android.view.ViewGroup[@content-desc=\"chainedView\"]/android.view.ViewGroup");
     }
 
     public void waitForListOfReactNativeElements(){
@@ -33,5 +21,20 @@ public class HomeScreen extends BasePage {
     public List<WebElement> getListOfElemetTypes() {
         waitForListOfReactNativeElements();
         return getElementsByXpath(listOfReactElementsLocator);
+    }
+
+    public void closeReactNativeWarningIfExists() {
+        String okButton = "android:id/button1";
+        if (getElementsById(okButton).size() > 0){
+            getElementById(okButton).click();
+        }
+    }
+
+    public WebElement getNativeView(){
+        return getClickableElementByXpath("//android.widget.TextView[@content-desc='chainedView']");
+    }
+
+    public WebElement getSliderView() {
+        return getClickableElementByXpath("//android.view.ViewGroup[@content-desc=\"slider1\"]/android.view.ViewGroup");
     }
 }

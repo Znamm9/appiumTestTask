@@ -11,6 +11,6 @@ public class LoginScreen extends BasePage {
     }
 
     public WebElement getSubmitLoginBtn(){
-        return getElementByXpath("//android.view.ViewGroup[@content-desc='login']/android.widget.Button/android.widget.TextView");
+        return getClickableElementByXpath("//android.view.ViewGroup[@content-desc='login']/android.widget.Button/android.widget.TextView");
     }
 }

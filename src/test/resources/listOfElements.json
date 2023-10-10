@@ -1,3 +1,5 @@
-[
-
-]
+{
+  "nativeViewTextOne": "Hello World, I'm View one ",
+  "nativeViewTextTwo": "Hello World, I'm View two ",
+  "nativeViewTextThree": "Hello World, I'm View three "
+}

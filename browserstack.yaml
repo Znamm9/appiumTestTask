@@ -1,0 +1,13 @@
+userName: vadym49
+accessKey: uoGZhUiEf1p3mxzYtbcr
+framework: java
+app: bs://sample.app
+platforms:
+  - platformName: android
+    deviceName: Samsung Galaxy S21 Plus
+    platformVersion: 11.0
+browserstackLocal: false
+buildName: appium-task
+projectName: BrowserStack Sample
+debug: true
+networkLogs: true
