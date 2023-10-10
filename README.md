@@ -1,8 +1,8 @@
 # Test automation framework
 
 ## Framework architecture intro
-Framework was designed using Page Object pattern. All data that can be shared with other pages or eve apps saved in BasePage class.
-All configuration and steps for cucumber scenarios is in StepDefinitions class. (could be splitted to different parts as well)
+The framework was designed using the Page Object pattern. All data that can be shared with other pages or even apps is saved in BasePage class.
+All configuration and steps for cucumber scenarios is in StepDefinitions class. (could be split to different parts as well)
 
 ## To spin the tests locally do next
 
@@ -27,8 +27,8 @@ mvn test
 ## To spin the tests in cloud (Sauce Labs) do next:
 _____________________
 ### !!!!important!!!!
-apk file was build for x86 arch type, Sauce Labs supports only one version with this arch type - 8.1.
-rebuild apk file for newer android version to make tests passing on cloud.
+apk file was built for x86 arch type, Sauce Labs supports only one version with this arch type - 8.1.
+rebuild apk file for the newer android version to make tests pass on a cloud.
 Also, I left my credentials HARDCODED, to make tests run on my account. 
 ____________________
 add your Sauce Labs username to system variables (name is fake, so paste your name instead)
@@ -48,4 +48,4 @@ mvn -Dremote=true test
 
 ## P.S.
 I use JSon only in one place, to demonstrate I know how to work with it. I prefer to leave all test data in feature files if possible.
-Also, app sometimes crashes (my guess is due to old version it was build), I'd recommend to add retry and taking screenshots on failure, but today it would be too much for this task, so I decided to skip it
+Also, the app sometimes crashes (my guess is due to the old version it was built), I'd recommend adding retry and taking screenshots of failure, but today it would be too much for this task, so I decided to skip it
