@@ -27,7 +27,7 @@ public class BasePage {
         }
     }
 
-    public WebElement getElementByXpath(String locator){
+    public WebElement getClickableElementByXpath(String locator){
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(TIME_TO_WAIT_SECONDS));
         return wait.until(ExpectedConditions.elementToBeClickable(By.xpath(locator)));
     }
@@ -39,6 +39,10 @@ public class BasePage {
     public WebElement getElementById(String id){
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(TIME_TO_WAIT_SECONDS));
         return wait.until(ExpectedConditions.elementToBeClickable(By.id(id)));
+    }
+
+    public List<WebElement> getElementsById(String id){
+        return driver.findElements(By.id(id));
     }
 
     public void waitForElementToDisappear(By by, String locator){

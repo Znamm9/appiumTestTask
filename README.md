@@ -3,20 +3,29 @@
 ## To spin the tests locally do next
 
 Start appium server with endpoint 127.0.0.1/wd/hub.
-Create virtual device (I used Android 7.1.1)
+
+### Create virtual device (I used Android 11)
 Create system variable for your device name like below (use your id instead of emulator-5554)
 ```bash
 export deviceid=emulator-5554
 ```
+hint to get UDID use command
+```bash
+adb devices
+```
 
-Run nex command in your terminal:
+Run next command in your terminal:
 
 ```bash
 mvn test
 ```
 
-## To spin the tests in cloud (Sauce Labs) run next command in your terminal
-
+## To spin the tests in cloud (Sauce Labs) do next:
+_____________________
+### !!!!important!!!!
+apk file was build for old android version, 7.1.1 android version is not supported with Sauce Labs anymore.
+rebuild apk file for newer android version to maek tests passing on cloud. 
+____________________
 add your Sauce Labs username to system variables (name is fake, so paste your name instead)
 ```bash
 export SAUCENAME=oauth-v.rudenko106-12345

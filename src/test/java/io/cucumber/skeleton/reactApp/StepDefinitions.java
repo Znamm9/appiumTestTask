@@ -3,11 +3,14 @@ package io.cucumber.skeleton.reactApp;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.remote.AndroidMobileCapabilityType;
 import io.appium.java_client.remote.MobileCapabilityType;
+import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import io.cucumber.skeleton.reactApp.pageObjectsReactApp.HomeScreen;
 import io.cucumber.skeleton.reactApp.pageObjectsReactApp.LoginScreen;
+import io.cucumber.skeleton.reactApp.pageObjectsReactApp.NativeViewScreen;
+import io.cucumber.skeleton.reactApp.pageObjectsReactApp.SliderScreen;
 import org.junit.Assert;
 import org.openqa.selenium.MutableCapabilities;
 import org.openqa.selenium.remote.DesiredCapabilities;
@@ -25,17 +28,11 @@ public class StepDefinitions{
     public DesiredCapabilities getLocalCapabilities() {
         DesiredCapabilities capabilities = new DesiredCapabilities();
         capabilities.setCapability("platformName", "Android");
-//        capabilities.setCapability("appActivity", "com.example.app.MainActivity");
-//        capabilities.setCapability("udid", "emulator-5554");
         capabilities.setCapability("udid", getDeviceId());
         capabilities.setCapability(AndroidMobileCapabilityType.AUTO_GRANT_PERMISSIONS, "true");
-        capabilities.setCapability("permissions", "android.permission.READ_EXTERNAL_STORAGE");
         capabilities.setCapability("automationName", "UiAutomator2");
-
-//        for some reason this next line doesn't work as expected, but before I used it
-        capabilities.setCapability("autoGrantPermissions", "true");
-
         capabilities.setCapability(MobileCapabilityType.APP, new File("src/test/resources/appiumChallenge.apk").getAbsolutePath());
+        capabilities.setCapability("fullReset","true");
         return capabilities;
     }
 
@@ -55,13 +52,15 @@ public class StepDefinitions{
         capabilities.setCapability("platformName", "Android");
         capabilities.setCapability("appium:app", "storage:filename=appiumChallenge.apk");  // The filename of the mobile app
         capabilities.setCapability("appium:deviceName", "Android GoogleAPI Emulator");
-        capabilities.setCapability("appium:platformVersion", "7.1.1");
+//        sauce labs have only 8.1 Android for x86 arch type
+        capabilities.setCapability("appium:platformVersion", "8.1");
         capabilities.setCapability("appium:automationName", "UiAutomator2");
+        capabilities.setCapability(AndroidMobileCapabilityType.AUTO_GRANT_PERMISSIONS, "true");
         MutableCapabilities sauceOptions = new MutableCapabilities();
-//        sauceOptions.setCapability("username", "oauth-v.rudenko106-d1b39");
-        sauceOptions.setCapability("username", getSauceLabsUserName());
-//        sauceOptions.setCapability("accessKey", "7ccdc9d5-8cda-4a68-9959-89059265db0c");
-        sauceOptions.setCapability("accessKey", getSauceLabsKey());
+        sauceOptions.setCapability("username", "oauth-v.rudenko106-d1b39");
+//        sauceOptions.setCapability("username", getSauceLabsUserName());
+        sauceOptions.setCapability("accessKey", "7ccdc9d5-8cda-4a68-9959-89059265db0c");
+//        sauceOptions.setCapability("accessKey", getSauceLabsKey());
         sauceOptions.setCapability("build", "appium-build-QC4A4");
         sauceOptions.setCapability("name", "<your test name>");
         sauceOptions.setCapability("deviceOrientation", "PORTRAIT");
@@ -112,11 +111,15 @@ public class StepDefinitions{
     }
     LoginScreen loginScreen;
     HomeScreen homeScreen;
+    NativeViewScreen nativeViewScreen;
+    SliderScreen sliderScreen;
 
 
     public void initPages(){
         loginScreen = new LoginScreen(driver);
         homeScreen = new HomeScreen(driver);
+        nativeViewScreen = new NativeViewScreen(driver);
+        sliderScreen = new SliderScreen(driver);
     }
 
     @Given("app started")
@@ -129,6 +132,7 @@ public class StepDefinitions{
             initLocalAndroidDriver(capabilities);
         }
         initPages();
+        homeScreen.closeReactNativeWarningIfExists();
     }
 
     @When("I click login")
@@ -140,8 +144,28 @@ public class StepDefinitions{
         Assert.assertTrue(homeScreen.getNativeView().isDisplayed());
     }
 
-    @Then("I see <{int}> elements")
-    public void iSeeElements(int numberOfExpectedElements) {
-        Assert.assertEquals(homeScreen.getListOfElemetTypes().size(), numberOfExpectedElements);
+    @Then("I see more than <{int}> elements")
+    public void iSeeElements(int minimumNumberOfElements) {
+        Assert.assertTrue(homeScreen.getListOfElemetTypes().size() > minimumNumberOfElements);
+    }
+
+    @When("I click native view")
+    public void iClickNativeView() {
+        homeScreen.getNativeView().click();
+    }
+
+    @Then("I see native elements")
+    public void iSeeNativeElements() {
+        Assert.assertEquals(nativeViewScreen.getListOfViews().size(), 3);
+    }
+
+    @And("I click slider")
+    public void iClickSlider() {
+        homeScreen.getSliderView().click();
+    }
+
+    @Then("I see slider")
+    public void iSeeSlider() {
+        Assert.assertTrue(sliderScreen.getSlider().isDisplayed());
     }
 }

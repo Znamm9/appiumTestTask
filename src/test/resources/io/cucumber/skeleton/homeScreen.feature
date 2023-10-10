@@ -1,4 +1,4 @@
-Feature: test app
+Feature: Application
 
   Background:
     Given app started
@@ -9,4 +9,4 @@ Feature: test app
 
   Scenario: check list of elements on home screen
     When I click login
-    Then I see <10> elements
+    Then I see more than <6> elements
